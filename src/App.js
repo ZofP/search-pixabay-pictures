@@ -34,7 +34,7 @@ class App extends Component {
     const response = await request.json();
     this.setState({ pictures: response.hits })
 
-    console.log(this.state.pictures, this.state.enlargedPicture);
+    // console.log(this.state.pictures, this.state.enlargedPicture);
 
   }
 
