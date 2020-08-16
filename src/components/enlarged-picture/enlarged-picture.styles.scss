@@ -1,0 +1,28 @@
+.gray-background {
+  background: rgba(0, 0, 0, 0.7);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.big-img-container {
+  // height: 80vh;
+  // width: 80vw;
+
+  // position: absolute;
+
+  // margin: auto auto;
+  overflow: hidden;
+}
+// .big-img {
+//   // display: block;
+//   // position: absolute;
+//   // left: 0;
+//   // right: 0;
+//   // object-fit: cover;
+// }
