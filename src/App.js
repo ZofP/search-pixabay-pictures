@@ -57,43 +57,49 @@ class App extends Component {
   }
 
 
-  handleClickArrow = (direction, id) => {
+  handleClickArrow = (direction, url, id, arrow) => {
     const { pictures } = this.state;
     const indexArray = pictures.map((picture) => picture.id);
     const currentPicture = pictures[indexArray.indexOf(id)];
 
 
 
-    switch (direction) {
-      case "left":
-        const previousPicture = (indexArray.indexOf(id) != 0) ? pictures[indexArray.indexOf(id) - 1] : currentPicture;
-        console.log(indexArray.indexOf(id) - 1);
-        this.setState(
-          {
-
-            enlargedPicture:
+    if (!arrow) {
+      return;
+    }
+    else {
+      console.log(arrow);
+      switch (direction) {
+        case "left":
+          const previousPicture = (indexArray.indexOf(id) !== 0) ? pictures[indexArray.indexOf(id) - 1] : currentPicture;
+          this.setState(
             {
-              show: true,
-              url: previousPicture.webformatURL,
-              id: previousPicture.id
-            }
 
-          })
-        break;
-      case "right":
-        const nextPicture = (indexArray.indexOf(id) <= indexArray.length) ? pictures[indexArray.indexOf(id) + 1] : currentPicture
-        this.setState(
-          {
-            enlargedPicture:
+              enlargedPicture:
+              {
+                show: true,
+                url: previousPicture.webformatURL,
+                id: previousPicture.id
+              }
+
+            })
+          break;
+        default: return
+        case "right":
+          const nextPicture = (indexArray.indexOf(id) <= indexArray.length) ? pictures[indexArray.indexOf(id) + 1] : currentPicture
+          this.setState(
             {
-              show: true,
-              url: nextPicture.webformatURL,
-              id: nextPicture.id
-            }
+              enlargedPicture:
+              {
+                show: true,
+                url: nextPicture.webformatURL,
+                id: nextPicture.id
+              }
 
-          })
-        break;
+            })
+          break;
 
+      }
     }
   }
 
