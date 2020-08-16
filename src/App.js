@@ -18,7 +18,8 @@ class App extends Component {
       enlargedPicture:
       {
         show: false,
-        url: ""
+        url: "",
+        id: null
       }
     }
   }
@@ -56,7 +57,47 @@ class App extends Component {
   }
 
 
-  showPicture = (url) => {
+  handleClickArrow = (direction, id) => {
+    const { pictures } = this.state;
+    const indexArray = pictures.map((picture) => picture.id);
+    const currentPicture = pictures[indexArray.indexOf(id)];
+
+
+
+    switch (direction) {
+      case "left":
+        const previousPicture = (indexArray.indexOf(id) != 0) ? pictures[indexArray.indexOf(id) - 1] : currentPicture;
+        console.log(indexArray.indexOf(id) - 1);
+        this.setState(
+          {
+
+            enlargedPicture:
+            {
+              show: true,
+              url: previousPicture.webformatURL,
+              id: previousPicture.id
+            }
+
+          })
+        break;
+      case "right":
+        const nextPicture = (indexArray.indexOf(id) <= indexArray.length) ? pictures[indexArray.indexOf(id) + 1] : currentPicture
+        this.setState(
+          {
+            enlargedPicture:
+            {
+              show: true,
+              url: nextPicture.webformatURL,
+              id: nextPicture.id
+            }
+
+          })
+        break;
+
+    }
+  }
+
+  showPicture = (url, id) => {
 
     const { show } = this.state.enlargedPicture;
     if (!show) {
@@ -65,7 +106,8 @@ class App extends Component {
           enlargedPicture:
           {
             show: !show,
-            url: url
+            url: url,
+            id: id
           }
         }
       )
@@ -76,7 +118,8 @@ class App extends Component {
           enlargedPicture:
           {
             show: !show,
-            url: ""
+            url: "",
+            id: null
           }
         }
       )
@@ -87,7 +130,7 @@ class App extends Component {
 
 
   render() {
-    const { pictures, searchField, enlargedPicture: { show, url } } = this.state;
+    const { pictures, searchField, enlargedPicture: { show, url, id } } = this.state;
 
     const filteredPictures = pictures.filter(picture => picture.tags.toLowerCase().includes(searchField.toLowerCase())
     );
@@ -103,7 +146,7 @@ class App extends Component {
         />
         <CardList pictures={filteredPictures} showPicture={this.showPicture} />
 
-        {show && <EnlargedPicture url={url} show={show} hidePicture={this.showPicture} />}
+        {show && <EnlargedPicture id={id} url={url} show={show} hidePicture={this.showPicture} handleClickArrow={this.handleClickArrow} />}
 
 
       </div>

@@ -13,14 +13,11 @@
   align-items: center;
   justify-content: space-between;
 
-  h4,
-  ul {
+  .tags {
     align-self: flex-start;
-    li {
-      text-align: left;
-    }
+    text-align: left;
   }
-
+  // }
   &:hover {
     transform: scale(1.05);
   }
