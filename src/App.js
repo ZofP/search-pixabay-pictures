@@ -35,21 +35,10 @@ class App extends Component {
     const response = await request.json();
     this.setState({ pictures: response.hits })
 
-    // console.log(this.state.pictures, this.state.enlargedPicture);
 
   }
 
-  // componentDidMount() {
-  //   const API_KEY = "17858990-0d6c088ba5028789850f3a8af";
 
-  //   const url = `https://pixabay.com/api/?key=${API_KEY}&safesearch=true&per_page=200&image_type=photo`;
-
-  //   fetch(url)
-  //     .then(request => request.json())
-  //     .then(response => this.setState({ pictures: response.hits }))
-  //     .then(console.log(this.state.pictures, this.state.enlargedPicture));
-
-  // }
 
   handleChange = (e) => {
     this.setState({ searchField: e.target.value })
@@ -57,16 +46,44 @@ class App extends Component {
   }
 
 
-  handleClickArrow = (direction, url, id, arrow) => {
-    const { pictures } = this.state;
+  handleClick = (direction, url, id, arrow, event) => {
+    const { pictures, enlargedPicture: { show } } = this.state;
     const indexArray = pictures.map((picture) => picture.id);
     const currentPicture = pictures[indexArray.indexOf(id)];
 
 
-
-    if (!arrow) {
-      return;
+    if (!show) {
+      console.log("this is showPicture method: ", show);
+      this.setState(
+        {
+          enlargedPicture:
+          {
+            show: !show,
+            url: url,
+            id: id
+          }
+        }
+        , () => console.log("this is showPicture method: ", this.state.enlargedPicture.show))
     }
+    else if (event.target.id != id) {
+      console.log(event.target.id, id);
+
+      console.log("this is hidePicture method - arrow was: ", arrow)
+      // event.stopPropagation();
+      this.setState(
+        {
+          enlargedPicture:
+          {
+            show: !show,
+            url: "",
+            id: null
+          }
+        }
+      )
+
+    }
+
+
     else {
       console.log(arrow);
       switch (direction) {
@@ -84,7 +101,7 @@ class App extends Component {
 
             })
           break;
-        default: return
+
         case "right":
           const nextPicture = (indexArray.indexOf(id) <= indexArray.length) ? pictures[indexArray.indexOf(id) + 1] : currentPicture
           this.setState(
@@ -98,41 +115,10 @@ class App extends Component {
 
             })
           break;
-
+        default: return
       }
     }
   }
-
-  showPicture = (url, id) => {
-
-    const { show } = this.state.enlargedPicture;
-    if (!show) {
-      this.setState(
-        {
-          enlargedPicture:
-          {
-            show: !show,
-            url: url,
-            id: id
-          }
-        }
-      )
-    }
-    else {
-      this.setState(
-        {
-          enlargedPicture:
-          {
-            show: !show,
-            url: "",
-            id: null
-          }
-        }
-      )
-
-    }
-  };
-
 
 
   render() {
@@ -150,9 +136,9 @@ class App extends Component {
           placeholder="search pictures by tags"
           handleChange={this.handleChange}
         />
-        <CardList pictures={filteredPictures} showPicture={this.showPicture} />
+        <CardList pictures={filteredPictures} showPicture={this.handleClick} />
 
-        {show && <EnlargedPicture id={id} url={url} show={show} hidePicture={this.showPicture} handleClickArrow={this.handleClickArrow} />}
+        {show && <EnlargedPicture id={id} url={url} show={show} hidePicture={this.handleClick} handleClickArrow={this.handleClick} />}
 
 
       </div>
