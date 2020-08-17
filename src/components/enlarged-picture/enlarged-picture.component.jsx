@@ -8,13 +8,26 @@ const EnlargedPicture = (picture) => {
   return (
     <div
       className="enlarged-picture-component-container"
-      onClick={(event) => hidePicture("", url, id, false, event)}
+      onClick={(event) =>
+        hidePicture({
+          url: url,
+          id: id,
+          event: event,
+        })
+      }
     >
       <div className="flexbox-container">
         <div
           className={`arrow left-arrow`}
           id={id}
-          onClick={(event) => handleClickArrow("left", url, id, "arrow", event)}
+          onClick={(event) =>
+            handleClickArrow({
+              direction: "left",
+              url: url,
+              id: id,
+              event: event,
+            })
+          }
         >
           &#11164;
         </div>
@@ -25,7 +38,12 @@ const EnlargedPicture = (picture) => {
           className="arrow right-arrow"
           id={id}
           onClick={(event) =>
-            handleClickArrow("right", url, id, "arrow", event)
+            handleClickArrow({
+              direction: "right",
+              url: url,
+              id: id,
+              event: event,
+            })
           }
         >
           &#11166;

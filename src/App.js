@@ -46,14 +46,13 @@ class App extends Component {
   }
 
 
-  handleClick = (direction, url, id, arrow, event) => {
+  handleClick = ({ direction, url, id, event }) => {
     const { pictures, enlargedPicture: { show } } = this.state;
     const indexArray = pictures.map((picture) => picture.id);
     const currentPicture = pictures[indexArray.indexOf(id)];
 
-
+    // show picture
     if (!show) {
-      console.log("this is showPicture method: ", show);
       this.setState(
         {
           enlargedPicture:
@@ -63,13 +62,12 @@ class App extends Component {
             id: id
           }
         }
-        , () => console.log("this is showPicture method: ", this.state.enlargedPicture.show))
+      )
     }
-    else if (event.target.id != id) {
-      console.log(event.target.id, id);
 
-      console.log("this is hidePicture method - arrow was: ", arrow)
-      // event.stopPropagation();
+    // hide picture
+    else if (Number(event.target.id) !== Number(id)) {
+
       this.setState(
         {
           enlargedPicture:
@@ -83,9 +81,8 @@ class App extends Component {
 
     }
 
-
+    // handle arrows
     else {
-      console.log(arrow);
       switch (direction) {
         case "left":
           const previousPicture = (indexArray.indexOf(id) !== 0) ? pictures[indexArray.indexOf(id) - 1] : currentPicture;

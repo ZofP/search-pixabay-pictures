@@ -12,7 +12,14 @@ const Card = ({
     <div className="card-container">
       <div
         className="img-container"
-        onClick={() => showPicture(false, webformatURL, id, false)}
+        onClick={(event) =>
+          showPicture({
+            direction: false,
+            url: webformatURL,
+            id: id,
+            event: event,
+          })
+        }
       >
         <img src={previewURL} alt="pixabay" />
       </div>
